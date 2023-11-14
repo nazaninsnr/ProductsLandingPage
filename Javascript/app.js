@@ -2,6 +2,16 @@ const searchInput = document.getElementById("search-input");
 const buttons = document.querySelectorAll(".filter");
 const products = document.querySelectorAll(".product-item");
 
+const changeClass = (filter) => {
+  buttons.forEach((button) => {
+    if (button.dataset.filter === filter) {
+      button.classList.add("selected");
+    } else {
+      button.classList.remove("selected");
+    }
+  });
+};
+
 const searchHandler = (event) => {
   const searchValue = event.target.value.toLowerCase().trim();
 
@@ -17,6 +27,7 @@ const searchHandler = (event) => {
 
 const filterHandler = (event) => {
   const filter = event.target.dataset.filter;
+  changeClass(filter);
 
   products.forEach((product) => {
     const category = product.dataset.category;
