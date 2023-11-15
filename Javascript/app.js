@@ -1,6 +1,9 @@
 const searchInput = document.getElementById("search-input");
-const buttons = document.querySelectorAll(".filter");
 const products = document.querySelectorAll(".product-item");
+const buttons = document.querySelectorAll(".filter");
+const priceButton = document
+  .getElementById("search-price")
+  .querySelector("button");
 
 const changeClass = (filter) => {
   buttons.forEach((button) => {
@@ -41,7 +44,28 @@ const filterHandler = (event) => {
   });
 };
 
-searchInput.addEventListener("keyup", searchHandler);
-buttons.forEach((button) => {
-  button.addEventListener("click", filterHandler);
-});
+const searchPriceHandler = (event) => {
+  const searchPrice = +event.target.parentElement.children[0].value;
+
+  products.forEach((product) => {
+    const productPrice = product.children[2].innerText;
+    const finalPrice = +productPrice.split(" ")[1];
+    if (!searchPrice) {
+      product.style.display = "block";
+    } else {
+      searchPrice === finalPrice
+        ? (product.style.display = "block")
+        : (product.style.display = "none");
+    }
+  });
+};
+
+const start = () => {
+  buttons.forEach((button) => {
+    button.addEventListener("click", filterHandler);
+  });
+  searchInput.addEventListener("keyup", searchHandler);
+  priceButton.addEventListener("click", searchPriceHandler);
+};
+
+window.addEventListener("load", start);
